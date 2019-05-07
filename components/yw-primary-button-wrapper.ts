@@ -32,7 +32,7 @@ template.innerHTML = `
 
 (window as any).ShadyCSS && (window as any).ShadyCSS.prepareTemplate(template, 'yw-primary-button');
 
-export class YwPrimaryButton extends HTMLElement {
+export class YwPrimaryButtonWrapper extends HTMLElement {
     private root: ShadowRoot;
 
     constructor() {

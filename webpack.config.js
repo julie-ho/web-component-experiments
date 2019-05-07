@@ -2,7 +2,6 @@ const path = require('path');
 
 module.exports = {
   entry: [
-    "@babel/polyfill",
     path.join(__dirname, '/app.ts')
   ],
   output: {
@@ -14,8 +13,47 @@ module.exports = {
       {
         test: /\.ts(x?)$/,
         loaders: [
-          "babel-loader",
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/typescript',
+                [
+                  '@babel/preset-env',
+                  {
+                    "modules": "umd",
+                    "useBuiltIns": "usage",
+                    "targets": {
+                      "ie": "11"
+                    }
+                }]
+              ]
+            }
+          },
           "ts-loader"
+        ],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.js(x?)$/,
+        loaders: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    "modules": "umd",
+                    "useBuiltIns": "usage",
+                    "targets": {
+                      "ie": "11"
+                    }
+                  }
+                ]
+              ]
+            }
+          }
         ],
         exclude: /node_modules/
       }
@@ -23,11 +61,11 @@ module.exports = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"]
+  },
+  devServer: {
+    // ...
+    host: '0.0.0.0',
+    port: 8080,
+    // ...
   }
-  // devServer: {
-  //   // ...
-  //   host: '0.0.0.0',
-  //   port: 8080,
-  //   // ...
-  // }
 };
