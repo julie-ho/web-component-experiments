@@ -15,7 +15,7 @@ Deco investigated several options for supporting a design system. These options 
 * Implementing a design system using just Angular 7
 * Not implementing a design system
 
-In the end, we felt that implementing a design system structured using web components was the option we’d like to move forward with. Implementing a design system structured similar to bootstrap was the other leading option.
+In the end, we felt that implementing a design system structured using web components was the option we’d like to move forward with. Implementing a design system structured similar to bootstrap was another leading option.
 
 ### Why Web Components
 
@@ -50,7 +50,7 @@ The master branch in this repo contains 'vanilla' web components. The only produ
 
 The 'lit-element' branch contains web components with the boilerplate removed. It's possible we'd go with LitElement to streamline our components but it's also possible that we'd decide to write some of our own helpers.
  
-## Setup and Run Command
+## Setup Command
  
 ```npm install```  
  
@@ -74,25 +74,15 @@ Pull the components in and initialize them.
 ```
 import {ywInit} from "web-components-trial";
 
-var initialized = false;
-
 export default class HomeController {
-	disabled = true;
-
-	// formValue = 'testing';
-	// formValue2 = 'testing form value 2'
-
 	constructor($log, $scope) {
 		'ngInject';
 		this.$log = $log;
 		ywInit();
-		$scope.formValue = 'testing';
-		$scope.formValue2 = 'testing2';
-		$scope.initialValue = 3
 	}
 ```
 
-To run the components in Chrome, no additional work should be needed. For cross-browser support, you may need to pull in the polyfills. The quick and easy way to do this is to add the following to your index.html:
+To run the components in Chrome, no additional work should be needed. Cross-browser support was verified against the webpack-dev-server rather than a production bundle, but you may be able to get it to work by pulling in polyfills. The quick and easy way to do this is to add the following to your index.html:
 
 ```
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.5.7/core.min.js"></script>
