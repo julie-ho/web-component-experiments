@@ -1,0 +1,11 @@
+::slotted(input) {
+  border-bottom: 1px solid black;
+}
+
+p {
+  display: none;
+}
+
+:host(.error) ::slotted(input) {
+  border-bottom: 1px solid red;
+}
