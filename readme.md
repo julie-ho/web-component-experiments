@@ -2,17 +2,17 @@
 
 This ReadMe contains:
 
-1) A summary of DECO’s investigation into web components
+1) A summary of DECO’s (Design Engineering Collaborative Operations) investigation into web components
 2) Information about the repository and how to run the code
 
 ## Investigation
 
-Deco investigated several options for supporting a design system. These options included:
+DECO investigated several options for supporting a design system. These options included implementing:
 
-* Implementing a design system using just HTML / CSS
-* Implementing a design system using HTML, CSS, and JS structured similar to bootstrap
-* Implementing a design system using HTML, CSS, and JS structured using web components
-* Implementing a design system using just Angular 7
+* A design system using just HTML / CSS
+* A design system using HTML, CSS, and JS structured similar to bootstrap
+* A design system using HTML, CSS, and JS structured using web components
+* A design system using just Angular 7
 * Not implementing a design system
 
 In the end, we felt that implementing a design system structured using web components was the option we’d like to move forward with. Implementing a design system structured similar to bootstrap was another leading option.
@@ -23,7 +23,7 @@ Web components are a core web technology and have gained significant support in 
 
 With polyfills and given a reasonable amount of effort, web components were shown to be compatible with IE11, all major browsers, AngularJS, Angular, and Angular Universal. 
 
-Developer ergonomics were preferable using web components vs. the bootstrap model. AngularJS and Angular syntax for passing properties and event-binding is the same as it would be for a regular HTML div when using web components. Web components limit the amount of context switching needed by developers because they reinforce the same conceptual, component-based, model that’s been popularized by AngularJS, Angular, React, and Vue. 
+Developer ergonomics were preferable using web components vs. the bootstrap model. AngularJS and Angular syntax for passing properties and event-binding is the same as it would be for a regular HTML div when using web components. Web components limit the amount of context switching needed by developers because they reinforce the same conceptual, component-based model that’s been popularized by AngularJS, Angular, React, and Vue. 
 
 ### Validation of Web Components
 
