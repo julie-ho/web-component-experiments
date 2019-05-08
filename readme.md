@@ -19,36 +19,46 @@ In the end, we felt that implementing a design system structured using web compo
 
 ### Why Web Components
 
-Web components are a core web technology and have gained significant support in the JS ecosystem for building out design systems. They can be deployed with no production dependencies 
+Web components are a core web technology and have gained significant support in the JS ecosystem for building out design systems. They can be deployed with no production dependencies.
 
-With polyfills and given a reasonable amount of effort, web components were shown to be compatible with IE11, all major browsers, angularJS, Angular, and Angular Universal. 
+With polyfills and given a reasonable amount of effort, web components were shown to be compatible with IE11, all major browsers, AngularJS, Angular, and Angular Universal. 
 
-Developer ergonomics were preferable using web components vs. the bootstrap model. angularJS and Angular syntax for passing properties and event-binding is the same as it would be for a regular HTML div when using web components. Web components limit the amount of context switching needed by developers because they reinforce the same conceptual, component-based, model that’s been popularized by angularJS, Angular, React, and Vue. 
+Developer ergonomics were preferable using web components vs. the bootstrap model. AngularJS and Angular syntax for passing properties and event-binding is the same as it would be for a regular HTML div when using web components. Web components limit the amount of context switching needed by developers because they reinforce the same conceptual, component-based, model that’s been popularized by AngularJS, Angular, React, and Vue. 
 
 ### Validation of Web Components
 
 The following steps were taken to validate that adopting native components would be feasible at Yesware. 
 
-* They components in this repository were imported into AngularJS, Angular, Angular Universal to see how they’d hold up.
+* The components in this repository were imported into AngularJS, Angular, Angular Universal to see how they’d hold up
 * They were also spun up in IE11 and Chrome
 
 ### Things to Be Aware Of 
 
-A special directive is needed when supporting 2-way data binding with native components in angularJS and Angular 2+. (See [Angular Bind Polymer](https://github.com/eee-c/angular-bind-polymer))
+A special directive is needed if we want to support 2-way data binding with native components in AngularJS and Angular 2+. (See [Angular Bind Polymer](https://github.com/eee-c/angular-bind-polymer))
 
 Angular does not support the syntax used for web components that inherit from existing HTML elements. See [here](https://developers.google.com/web/fundamentals/web-components/customelements#extend) for an explanation of this syntax. The workaround is to ‘wrap’ native HTML elements and augment them, similar in concept to a React HOC. The need for this workaround is why this repository contains a ‘yw-primary-button-wrapper’ component into which a ‘button’ element is injected rather than just implementing a ‘yw-primary-button’ directly.
 
-Angular form elements -- inputs, etc. -- are Angular-wrapped elements that implement a form control interface rather than actual native elements. So we would have to be thoughtful in implementing native components that are intended for use in angularJS / Angular forms. The workaround used in this repository is to ‘wrap’ form elements and augment them. This workaround is identical to the workaround used for extending native elements. 
+Angular form elements -- inputs, etc. -- are Angular-wrapped elements that implement a form control interface rather than actual native elements. So we would have to be thoughtful in implementing native components that are intended for use in AngularJS / Angular forms. The workaround used in this repository is to ‘wrap’ form elements and augment them. This workaround is identical to the workaround used for extending native elements. 
 
 The document and window objects are not available when rendering a page on the server. There are three possible workarounds. One is to defer initialization of code that relies on document until the components are in the client. Another is to render the document on the server using Chrome Headless rather than Node. (See documentation [here](https://developers.google.com/web/tools/puppeteer/articles/ssr).) A last option is to mock the DOM on the server using a third-party package like jsdom or Domino. The first two options were evaluated and shown to work as part of our investigation into web components. The third option was not evaluated because even if it were made to work, it has the potential to introduce unwanted side effects. The second option -- using Chrome Headless -- is likely the best possible option for supporting SSR. 
 
+It is not considered best practice to accept rich data (objects, arrays) as input properties. See [here](https://developers.google.com/web/fundamentals/web-components/best-practices) for best practices to use when authoring web components. 
+
 This repo is not intended to demonstrate what would likely be a finalized Webpack, etc., configuration. Time was limited on account of this being a hackz project!
 
-## Repository Information
+### LitElement
 
 The master branch in this repo contains 'vanilla' web components. The only production dependency for these components are the polyfills and shims necessary for full browser support.
 
-The 'lit-element' branch contains web components with the boilerplate removed. It's possible we'd go with LitElement to streamline our components but it's also possible that we'd decide to write some of our own helpers.
+The 'lit-element' branch contains web components with the boilerplate removed. LitElement was imported into this branch specifically to help reduce the boilerplate and to demonstrate how we could improve developer ergonomics when using web components. 
+
+LitElement is a small (< 1600 lines) package that is supported by the Polymer project. It looks promising and could very likely make it into the final version of our design system. Using LitElement would save us time in comparison to writing our own helpers in order to reduce web component boilerplate. The downsides I found during a limited evaluation were that it requires more support in the way of tooling and polyfills, particularly to support IE11. 
+
+## Repository Information
+
+The master branch in this repo contains 'vanilla' web components. 
+
+The 'lit-element' branch contains web components with the boilerplate removed. 
  
 ## Setup Command
  
@@ -61,9 +71,9 @@ The 'lit-element' branch contains web components with the boilerplate removed. I
 ## Build Command
 ```npm run build```
 
-## Pulling this repository into an angularJS / Angular project
+## Pulling this repository into an AngularJS / Angular project
 
-After building the package, add something like this to your angularJS / Angular project's package.json.
+After building the package, add something like this to your AngularJS / Angular project's package.json.
 
 ```
     "web-components-trial": "file:../web-component-experiments"
@@ -82,7 +92,7 @@ export default class HomeController {
 	}
 ```
 
-To run the components in Chrome, no additional work should be needed. Cross-browser support was verified against the webpack-dev-server rather than a production bundle, but you may be able to get it to work by pulling in polyfills. The quick and easy way to do this is to add the following to your index.html:
+To run the components in Chrome, no additional work should be needed. Cross-browser support was verified against the webpack-dev-server rather than a production bundle, but you may be able to get it to work across browser by pulling in polyfills. The quick and easy way to do this is to add the following to your index.html:
 
 ```
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.5.7/core.min.js"></script>
